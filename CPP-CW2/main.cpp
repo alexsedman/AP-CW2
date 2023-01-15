@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <cstdint> //Test
+#include <cstdint>
 
 // A data structure is defined for the WAV header.
 struct WAV_HEADER {
