@@ -48,7 +48,7 @@ void print_header() {
 
 int main() {
     // Variables declared: pointer to the filepath name and an input string.
-    int hdr_size = sizeof(wav_hdr); // A variable to measure the size of the WAV header
+    int hdr_size = sizeof(wav_hdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
     const char* file_path;
     std::string input;
     
@@ -62,14 +62,20 @@ int main() {
     FILE* wav_file;
     wav_file = fopen(file_path, "rb+"); // 'rb+' is a binary read/update parameter. This allows the file to be read and separated into bytes easier, as well as updated if need be.
     
-    /*
+    // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful).
+    if (wav_file == nullptr) {
+        std::cout << "ERROR: File can't be read." << std::endl;
+        return 0;
+    }
+
     //Read the header
-    size_t bytesRead = fread(&wav_hdr, 1, headerSize, wavFile);
-    std::cout << bytesRead << std::endl;
+    size_t bytes_read = fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function,
+    std::cout << bytes_read << std::endl;
     char buffer[] = { 'R' , 'I' , 'F' , 'X' };
-    fseek(wavFile,0,SEEK_SET);
-    fwrite(buffer, 2, 4, wavFile);
-    */
+    //fseek(wavFile,0,SEEK_SET);
+    //fwrite(buffer, 2, 4, wavFile);
+    
+    print_header(); // STEP 1: File information is printed.
     
     /* if (wav_file == NULL ){
         std::cout << "cant read it mate";
