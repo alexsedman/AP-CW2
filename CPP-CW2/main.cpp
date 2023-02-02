@@ -6,7 +6,9 @@
 //
 // Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
 //
-// Current test file pathname: /Users/alexsedman/Downloads/fragmentary sample v2.wav
+// Current test file pathnames:
+// /Users/alexsedman/Downloads/fragmentary sample v2.wav
+// /Users/alexsedman/Downloads/fragmentary sample v2 MONO.wav
 
 #include <iostream>
 #include <string>
@@ -38,11 +40,13 @@ struct WAV_HEADER {
 
 /*----------PRINT WAV HEADER----------*/
 // Function to print WAV header.
-void print_header() {
+void print_header(int hdr_size, FILE* wav_file) {
     using namespace std;
     //Print the header.
     cout << endl;
     cout << "---OPTION 1: PRINT---" << endl;
+    size_t bytes_read = fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
+    cout << "Bytes read for header: " << bytes_read << endl;
     cout << "Chunk ID (File Spec): " << wav_hdr.RIFF[0] << wav_hdr.RIFF[1] << wav_hdr.RIFF[2] << wav_hdr.RIFF[3] << endl;
     cout << "Chunk Size (File Size): " << wav_hdr.file_size << endl;
     cout << "File Type (FourCC Tag): " << wav_hdr.WAVE[0] << wav_hdr.WAVE[1] << wav_hdr.WAVE[2] << wav_hdr.WAVE[3] << endl;
@@ -95,12 +99,12 @@ std::string option_menu(std::string input) {
     
     //Print the option menu.
     cout << "---OPTIONS---" << endl;
-    cout << "Enter '1' to read the WAV header info." << endl;
-    cout << "Enter '2' to read the WAV header info." << endl;
-    cout << "Enter '3' to read the WAV header info." << endl;
-    cout << "Enter '4' to read the WAV header info." << endl;
-    cout << "Enter '5' to read the WAV header info." << endl;
-    cout << "Enter anything else to return to the main menu." << endl;
+    cout << "- Enter '1' to read the WAV header info." << endl;
+    cout << "- Enter '2' to change the sample rate (CREATES A NEW FILE)." << endl;
+    cout << "- Enter '3' to insert a pause (CREATES A NEW FILE)." << endl;
+    cout << "- Enter '4' to peak normalise (CREATES A NEW FILE)." << endl;
+    cout << "- Enter '5' to add a quirky audio effect (CREATES A NEW FILE)." << endl;
+    cout << "- Enter anything else to return to the main menu." << endl;
     cout << "Please input your choice: ";
     
     getline(cin, input);
@@ -108,6 +112,7 @@ std::string option_menu(std::string input) {
 }
 
 int main() {
+    /*----------INITIALISATION----------*/
     // Variables declared: pointer to the filepath name and an input string.
     int hdr_size = sizeof(wav_hdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
     const char* file_path;
@@ -126,25 +131,42 @@ int main() {
             continue;
         }
         
+        /*----------FILE READ----------*/
         // The file pathname is read, and the file info is committed to memory as a data stream, with 'wav_file' pointing to the first byte of data in this stream.
         //This means that the position of every value in the data stream is known, and committed to memory sequentially.
         file_path = input.c_str();
         FILE* wav_file;
         wav_file = fopen(file_path, "rb+"); // 'rb+' is a binary read/update parameter. This allows the file to be read and separated into bytes easier, as well as updated if need be.
+        //
         
-        
+        /*----------OPTION SECTION----------*/
         if (wav_file == nullptr) {
-            std::cout << "\nERROR: File can't be read/ input is invalid." << std::endl; // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful). This also works for an invalid user input.
+            std::cout << "\nERROR: File can't be read/input is invalid." << std::endl; // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful).
         } else {
-            std::cout << "\nFile read successful!\n" << std::endl;
+            size_t bytes_read = fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
+            if (wav_hdr.no_channels != 1) {
+                std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
+                std::cout << wav_hdr.no_channels;
+                continue;
+            } else {
+                std::cout << "\nFile read successful!\n" << std::endl;
+            }
+            
             input = option_menu(input);
+            if (input == "1") {
+                print_header(hdr_size, wav_file); // File information is printed.
+            } else if (input == "2") {
+                
+            } else if (input == "3") {
+                
+            } else if (input == "4") {
+                
+            } else if (input == "5") {
+                
+            } else {
+                std::cout << "\nERROR: Invalid option selection. Returning to the main menu." << std::endl;
+            }
         }
-        
-        /*----------OPTION 1: RETURN VALUES----------*/
-        // Read the header
-        //size_t bytes_read = fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function,
-        //std::cout << bytes_read << std::endl;
-        //print_header(); // File information is printed.
         
         fclose(wav_file);
         std::cout << std::endl;
