@@ -1,3 +1,13 @@
+//
+// main.cpp
+// C++ CW2
+//
+// Created by Alex Sedman.
+//
+// [NOTES HERE]
+//
+// Current test file pathname: /Users/alexsedman/Downloads/fragmentary sample v2.wav
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -43,7 +53,7 @@ void print_header() {
     cout << "Bits Per Sample: " << wav_hdr.sample_len << endl;
     
     cout << "Subchunk 2 ID (Data): " << wav_hdr.DATA[0] << wav_hdr.DATA[1] << wav_hdr.DATA[2] << wav_hdr.DATA[3] << endl;
-    cout << "Sub-Chank2 Size: " << wav_hdr.data_size << endl;
+    cout << "Subchunk 2 Size: " << wav_hdr.data_size << endl;
 }
 
 int main() {
