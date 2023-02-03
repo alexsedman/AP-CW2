@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D250A77D298DAAF000494907 /* wavEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D250A77B298DAAF000494907 /* wavEdit.cpp */; };
+		D250A780298DAB1F00494907 /* commandLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D250A77E298DAB1F00494907 /* commandLib.cpp */; };
 		D2A61056296438AD00460CBD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2A61055296438AD00460CBD /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D250A77B298DAAF000494907 /* wavEdit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wavEdit.cpp; sourceTree = "<group>"; };
+		D250A77C298DAAF000494907 /* wavEdit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = wavEdit.hpp; sourceTree = "<group>"; };
+		D250A77E298DAB1F00494907 /* commandLib.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = commandLib.cpp; sourceTree = "<group>"; };
+		D250A77F298DAB1F00494907 /* commandLib.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = commandLib.hpp; sourceTree = "<group>"; };
 		D2A61052296438AD00460CBD /* CPP-CW2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CPP-CW2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A61055296438AD00460CBD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "/Users/alexsedman/Documents/Xcode Projects/CPP-CW2/main.cpp"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -38,10 +44,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D250A77A298DAADC00494907 /* functionLib */ = {
+			isa = PBXGroup;
+			children = (
+				D250A77B298DAAF000494907 /* wavEdit.cpp */,
+				D250A77E298DAB1F00494907 /* commandLib.cpp */,
+				D250A77F298DAB1F00494907 /* commandLib.hpp */,
+				D250A77C298DAAF000494907 /* wavEdit.hpp */,
+			);
+			path = functionLib;
+			sourceTree = "<group>";
+		};
 		D2A61049296438AD00460CBD = {
 			isa = PBXGroup;
 			children = (
 				D2A61055296438AD00460CBD /* main.cpp */,
+				D250A77A298DAADC00494907 /* functionLib */,
 				D2A61053296438AD00460CBD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -111,6 +129,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D250A77D298DAAF000494907 /* wavEdit.cpp in Sources */,
+				D250A780298DAB1F00494907 /* commandLib.cpp in Sources */,
 				D2A61056296438AD00460CBD /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
