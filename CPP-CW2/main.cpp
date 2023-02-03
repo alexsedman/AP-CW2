@@ -4,7 +4,7 @@
 //
 // Created by Alex Sedman.
 //
-// Test line for commit.
+// GitHub branch v5 - avoiding object-based for this code as the scope of the project is more manageable in a single CPP file.
 //
 // Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
 //
@@ -172,19 +172,24 @@ int main() {
             
             // Calls the options menu.
             input = options(input);
-            if (input == "1") {
-                print_header(hdr_size, wav_file); // File information is printed.
-            } else if (input == "2") {
-                
-            } else if (input == "3") {
-                
-            } else if (input == "4") {
-                
-            } else if (input == "5") {
-                
-            } else {
-                std::cout << "\nERROR: Invalid option selection. Returning to the main menu." << std::endl;
+            
+            switch(input) {
+                case 1:
+                    print_header(hdr_size, wav_file); // File information is printed.
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    std::cout << "\nERROR: Invalid option selection. Returning to the main menu." << std::endl;
             }
+            //choose filename
+            //print file
         }
         
         fclose(wav_file);
