@@ -97,7 +97,7 @@ void print_header(int hdr_size, FILE* wav_file) {
     cout << endl;
     cout << "---OPTION 1: PRINT---" << endl;
     cout << "Chunk ID (File Spec): " << wav_hdr.RIFF[0] << wav_hdr.RIFF[1] << wav_hdr.RIFF[2] << wav_hdr.RIFF[3] << endl;
-    cout << "Chunk Size (File Size): " << wav_hdr.file_size << endl;
+    cout << "Chunk Size: " << wav_hdr.file_size << endl;
     cout << "File Type (FourCC Tag): " << wav_hdr.WAVE[0] << wav_hdr.WAVE[1] << wav_hdr.WAVE[2] << wav_hdr.WAVE[3] << endl;
     
     cout << "Subchunk 1 ID (Format): " << wav_hdr.fmt[0] << wav_hdr.fmt[1] << wav_hdr.fmt[2] << wav_hdr.fmt[3] << endl;
@@ -114,12 +114,20 @@ void print_header(int hdr_size, FILE* wav_file) {
 }
 
 /*----------(2) CHANGE SAMPLE RATE----------*/
-
 /*----------(3) ADD PAUSE----------*/
 /*----------(4) NORMALISE----------*/
 /*----------(5) FILTER----------*/
 /*----------NEW FILENAME----------*/
+
 /*----------WRITE NEW FILE----------*/
+// Function to write the data stream to a new file.
+void write_file(int hdr_size) {
+    //A new file is created, and the header is written from the data structure.
+    std::ofstream wav_write("/Users/alexsedman/Downloads/name.wav");
+    //std::fwrite(, 1, hdr_size, wav_write);
+    
+    wav_write.close();
+}
 
 int main() {
     /*----------INITIALISATION----------*/
