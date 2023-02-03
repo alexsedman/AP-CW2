@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D213EF3E298C3F9800CDF91E /* test_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D213EF3D298C3F9800CDF91E /* test_file.cpp */; };
 		D28208CE298D131C00210834 /* init_menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D28208CC298D131C00210834 /* init_menus.cpp */; };
 		D2A61056296438AD00460CBD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2A61055296438AD00460CBD /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -25,7 +24,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D213EF3D298C3F9800CDF91E /* test_file.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_file.cpp; sourceTree = "<group>"; };
 		D28208CC298D131C00210834 /* init_menus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init_menus.cpp; path = "CPP-CW2/Function Library/init_menus.cpp"; sourceTree = "<group>"; };
 		D28208CD298D131C00210834 /* init_menus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = init_menus.hpp; path = "CPP-CW2/Function Library/init_menus.hpp"; sourceTree = "<group>"; };
 		D2A61052296438AD00460CBD /* CPP-CW2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CPP-CW2"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				D2A61055296438AD00460CBD /* main.cpp */,
-				D213EF3D298C3F9800CDF91E /* test_file.cpp */,
 				D2A6105C296438DE00460CBD /* test_wavs */,
 			);
 			path = "CPP-CW2";
@@ -131,7 +128,6 @@
 			files = (
 				D28208CE298D131C00210834 /* init_menus.cpp in Sources */,
 				D2A61056296438AD00460CBD /* main.cpp in Sources */,
-				D213EF3E298C3F9800CDF91E /* test_file.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

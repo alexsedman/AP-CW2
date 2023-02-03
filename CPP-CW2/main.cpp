@@ -59,7 +59,7 @@ std::string main_menu(std::string input) {
 
 /*----------INFO----------*/
 // Function to print info section.
-void print_info() {
+void info() {
     using namespace std;
     //Print info.
     cout << endl;
@@ -72,7 +72,7 @@ void print_info() {
 
 /*----------OPTIONS MENU----------*/
 // Function to output options once file has been read.
-std::string option_menu(std::string input) {
+std::string options(std::string input) {
     using namespace std;
     
     //Print the option menu.
@@ -146,7 +146,7 @@ int main() {
             std::cout << "\nBye!\n" << std::endl;
             return 0;
         } else if (input == "-info") {
-            print_info();
+            info();
             continue;
         }
         
@@ -170,7 +170,8 @@ int main() {
                 std::cout << "\nFile read successful!\n" << std::endl;
             }
             
-            input = option_menu(input);
+            // Calls the options menu.
+            input = options(input);
             if (input == "1") {
                 print_header(hdr_size, wav_file); // File information is printed.
             } else if (input == "2") {
