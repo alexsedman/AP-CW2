@@ -4,9 +4,10 @@
 //
 // Created by Alex Sedman.
 //
-// GitHub branch v5 - avoiding object-based for this code as the scope of the project is more manageable in a single CPP file.
+// GitHub branch update - I'm avoiding a heavy object-based approach for this code as the scope of the project is more manageable in a couple CPP files.
+// NOTE: Due to the file naming system in this program, it will only work robustly on Mac OS.
 //
-// Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
+// TASK: Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
 //
 // Current test file pathnames:
 // /Users/alexsedman/Downloads/fragmentary sample v2.wav
@@ -58,7 +59,7 @@ std::string main_menu(std::string input) {
     return input;
 }
 
-/*----------INFO----------*/
+/*----------INFO MENU----------*/
 // Function to print info section.
 void info() {
     using namespace std;
@@ -115,10 +116,52 @@ void print_header(int hdr_size, FILE* wav_file) {
 }
 
 /*----------(2) CHANGE SAMPLE RATE----------*/
+// Changes sample rate of the WAV file according to user input.
+uint32_t change_sample(std::string input, uint32_t sample_rate) {
+    std::cout << "---OPTION 2: CHANGE SAMPLE RATE---" << std::endl;
+    std::cout << "Please choose a new sample rate between 24000-192000Hz." << std::endl;
+    
+    
+    std::cout << "New sample rate: ";
+    
+    
+    
+    
+    return sample_rate;
+}
+
 /*----------(3) ADD PAUSE----------*/
 /*----------(4) NORMALISE----------*/
 /*----------(5) FILTER----------*/
+
 /*----------NEW FILENAME----------*/
+// Gets a file name from user for the new WAV and converts this input to a new file path.
+std::string input_filename(std::string input, const char* file_path) {
+    // The new path variable is defined, and instructions are outputted.
+    std::string new_file_path = file_path;
+    std::cout << "\nPlease select a new filename." << std::endl;
+    std::cout << "NOTE: Files can not: \n- Contain a colon (':') \n- Contain a forward slash ('/') \n- Start with a period ('.') \n- Be more than 32 characters long \n- Be an empty input\nThe extension '.wav' will be automatically appended." << std::endl;
+    std::cout << "The new WAV will be created in the same directory as the old WAV." << std::endl;
+   
+    // This while loop demands a valid filename input from the user.
+    while (true) {
+        std::cout << "Filename: ";
+        std::getline(std::cin, input);
+        
+        // Parity checks: Make sure the requirements for a legal filename are met, as outlines above by the console output.
+        if ((input.find(':') != std::string::npos) || (input.find('/') != std::string::npos) || (input.length() == 0) || (input.at(0) == '.') || (input.length() > 32)) {
+            std::cout << "ERROR: Invalid filename." << std::endl;
+            continue;
+        }
+        
+        // The following lines construct the new path name.
+        input.std::string::append(".wav"); // Appends '.wav' to user input.
+        new_file_path.std::string::resize(new_file_path.std::string::find_last_of("/")+1); // Derives parent folder of old WAV.
+        new_file_path.std::string::append(input); // Appends the user file name to the file path.
+        break;
+    }
+    return new_file_path;
+}
 
 /*----------WRITE NEW FILE----------*/
 // Function to write the data stream to a new file.
@@ -157,13 +200,13 @@ int main() {
         file_path = input.c_str();
         FILE* wav_file;
         wav_file = fopen(file_path, "rb+"); // 'rb+' is a binary read/update parameter. This allows the file to be read and separated into bytes easier, as well as updated if need be.
-        //
         
-        /*----------OPTION SECTION----------*/
+        // Parity checks and file read.
         if (wav_file == nullptr) {
             std::cout << "\nERROR: File can't be read/input is invalid." << std::endl; // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful).
         } else {
-            size_t bytes_read = fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
+            
+            fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
             if (wav_hdr.no_channels != 1) {
                 std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
                 continue;
@@ -171,13 +214,15 @@ int main() {
                 std::cout << "\nFile read successful!\n" << std::endl;
             }
             
+            /*----------OPTION SECTION----------*/
             // Calls the options menu.
             input = options(input);
             
             if (input == "1") {
                 print_header(hdr_size, wav_file); // File information is printed.
             } else if (input == "2") {
-                
+                //sample recalc
+                input_filename(input, file_path);
             } else if (input == "3") {
                 
             } else if (input == "4") {
