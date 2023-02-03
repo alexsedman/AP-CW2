@@ -24,27 +24,27 @@
 struct WAV_HEADER {
     // RIFF Chunk Descriptor
     uint8_t RIFF[4];
-    uint32_t file_size;
+    uint32_t fileSize;
     uint8_t WAVE[4];
 
     // fmt subchunk
     uint8_t fmt[4];
-    uint32_t fmt_len;
-    uint16_t fmt_type;
-    uint16_t no_channels;
-    uint32_t sample_rate;
-    uint32_t byte_rate;
-    uint16_t block_align;
-    uint16_t sample_len;
+    uint32_t fmtLen;
+    uint16_t fmtType;
+    uint16_t noChannels;
+    uint32_t sampleRate;
+    uint32_t byteRate;
+    uint16_t blockAlign;
+    uint16_t sampleLen;
     
     // Data subchunk
     uint8_t DATA[4];
-    uint32_t data_size;
-} wav_hdr;
+    uint32_t dataSize;
+} wavHdr;
 
 /*----------MAIN MENU----------*/
 // Function to output main menu and return the user input.
-std::string main_menu(std::string input) {
+std::string mainMenu(std::string input) {
     using namespace std;
     
     //Print the main menu.
@@ -91,54 +91,11 @@ std::string options(std::string input) {
     return input;
 }
 
-/*----------(1) PRINT WAV HEADER----------*/
-// Function to print WAV header.
-void print_header(int hdr_size, FILE* wav_file) {
-    using namespace std;
-    //Print the header.
-    cout << endl;
-    cout << "---OPTION 1: PRINT---" << endl;
-    cout << "Chunk ID (File Spec): " << wav_hdr.RIFF[0] << wav_hdr.RIFF[1] << wav_hdr.RIFF[2] << wav_hdr.RIFF[3] << endl;
-    cout << "Chunk Size: " << wav_hdr.file_size << endl;
-    cout << "File Type (FourCC Tag): " << wav_hdr.WAVE[0] << wav_hdr.WAVE[1] << wav_hdr.WAVE[2] << wav_hdr.WAVE[3] << endl;
-    
-    cout << "Subchunk 1 ID (Format): " << wav_hdr.fmt[0] << wav_hdr.fmt[1] << wav_hdr.fmt[2] << wav_hdr.fmt[3] << endl;
-    cout << "Subchunk Size: " << wav_hdr.fmt_len << endl;
-    cout << "Audio Format: " << wav_hdr.fmt_type << endl;
-    cout << "Number of Channels: " << wav_hdr.no_channels << endl;
-    cout << "Sample Rate: " << wav_hdr.sample_rate << endl;
-    cout << "Data Rate (Bps): " << wav_hdr.byte_rate << endl;
-    cout << "Block Align: " << wav_hdr.block_align << endl;
-    cout << "Bits Per Sample: " << wav_hdr.sample_len << endl;
-    
-    cout << "Subchunk 2 ID (Data): " << wav_hdr.DATA[0] << wav_hdr.DATA[1] << wav_hdr.DATA[2] << wav_hdr.DATA[3] << endl;
-    cout << "Subchunk 2 Size: " << wav_hdr.data_size << endl;
-}
-
-/*----------(2) CHANGE SAMPLE RATE----------*/
-// Changes sample rate of the WAV file according to user input.
-uint32_t change_sample(std::string input, uint32_t sample_rate) {
-    std::cout << "---OPTION 2: CHANGE SAMPLE RATE---" << std::endl;
-    std::cout << "Please choose a new sample rate between 24000-192000Hz." << std::endl;
-    
-    
-    std::cout << "New sample rate: ";
-    
-    
-    
-    
-    return sample_rate;
-}
-
-/*----------(3) ADD PAUSE----------*/
-/*----------(4) NORMALISE----------*/
-/*----------(5) FILTER----------*/
-
 /*----------NEW FILENAME----------*/
 // Gets a file name from user for the new WAV and converts this input to a new file path.
-std::string input_filename(std::string input, const char* file_path) {
+std::string filename(std::string input, const char* filePath) {
     // The new path variable is defined, and instructions are outputted.
-    std::string new_file_path = file_path;
+    std::string newFilePath = filePath;
     std::cout << "\nPlease select a new filename." << std::endl;
     std::cout << "NOTE: Files can not: \n- Contain a colon (':') \n- Contain a forward slash ('/') \n- Start with a period ('.') \n- Be more than 32 characters long \n- Be an empty input\nThe extension '.wav' will be automatically appended." << std::endl;
     std::cout << "The new WAV will be created in the same directory as the old WAV." << std::endl;
@@ -156,34 +113,83 @@ std::string input_filename(std::string input, const char* file_path) {
         
         // The following lines construct the new path name.
         input.std::string::append(".wav"); // Appends '.wav' to user input.
-        new_file_path.std::string::resize(new_file_path.std::string::find_last_of("/")+1); // Derives parent folder of old WAV.
-        new_file_path.std::string::append(input); // Appends the user file name to the file path.
+        newFilePath.std::string::resize(newFilePath.std::string::find_last_of("/")+1); // Derives parent folder of old WAV.
+        newFilePath.std::string::append(input); // Appends the user file name to the file path.
         break;
     }
-    return new_file_path;
+    return newFilePath;
 }
 
 /*----------WRITE NEW FILE----------*/
 // Function to write the data stream to a new file.
-void write_file(int hdr_size) {
+void write_file(int hdrSize, std::string newFilePath) {
     //A new file is created, and the header is written from the data structure.
-    std::ofstream wav_write("/Users/alexsedman/Downloads/name.wav");
-    //std::fwrite(, 1, hdr_size, wav_write);
+    filePath = input.c_str();
+    FILE* newFile;
+    newFile = fopen(newFilePath, "w");
     
-    wav_write.close();
+    //wav_write.close();
 }
+
+/*----------(1) PRINT WAV HEADER----------*/
+// Function to print WAV header.
+void print_header(int hdrSize, FILE* wavFile) {
+    using namespace std;
+    //Print the header.
+    cout << endl;
+    cout << "---OPTION 1: PRINT---" << endl;
+    cout << "Chunk ID (File Spec): " << wavHdr.RIFF[0] << wavHdr.RIFF[1] << wavHdr.RIFF[2] << wavHdr.RIFF[3] << endl;
+    cout << "Chunk Size: " << wavHdr.fileSize << endl;
+    cout << "File Type (FourCC Tag): " << wavHdr.WAVE[0] << wavHdr.WAVE[1] << wavHdr.WAVE[2] << wavHdr.WAVE[3] << endl;
+    
+    cout << "Subchunk 1 ID (Format): " << wavHdr.fmt[0] << wavHdr.fmt[1] << wavHdr.fmt[2] << wavHdr.fmt[3] << endl;
+    cout << "Subchunk Size: " << wavHdr.fmtLen << endl;
+    cout << "Audio Format: " << wavHdr.fmtType << endl;
+    cout << "Number of Channels: " << wavHdr.noChannels << endl;
+    cout << "Sample Rate: " << wavHdr.sampleRate << endl;
+    cout << "Data Rate (Bps): " << wavHdr.byteRate << endl;
+    cout << "Block Align: " << wavHdr.blockAlign << endl;
+    cout << "Bits Per Sample: " << wavHdr.sampleLen << endl;
+    
+    cout << "Subchunk 2 ID (Data): " << wavHdr.DATA[0] << wavHdr.DATA[1] << wavHdr.DATA[2] << wavHdr.DATA[3] << endl;
+    cout << "Subchunk 2 Size: " << wavHdr.dataSize << endl;
+}
+
+/*----------(2) CHANGE SAMPLE RATE----------*/
+// Changes sample rate of the WAV file according to user input.
+uint32_t change_sample(std::string input, uint32_t sampleRate) {
+    std::cout << "---OPTION 2: CHANGE SAMPLE RATE---" << std::endl;
+    std::cout << "Please choose a new sample rate between 24000-192000Hz." << std::endl;
+    /*input = " ";
+    while (input.is_number() == 0)
+        std::getline(std::cin, input);
+        if (input.is_number() == 0) {
+            std::cout << "Invalid input" << std::endl;
+        }
+    }
+    std::cout << "New sample rate: ";*/
+    
+    
+    
+    
+    return sampleRate;
+}
+
+/*----------(3) ADD PAUSE----------*/
+/*----------(4) NORMALISE----------*/
+/*----------(5) FILTER----------*/
 
 int main() {
     /*----------INITIALISATION----------*/
     // Variables declared: pointer to the filepath name and an input string.
-    int hdr_size = sizeof(wav_hdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
-    const char* file_path;
+    int hdrSize = sizeof(wavHdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
+    const char* filePath;
     std::string input;
     
     while (1) {
         /*----------MAIN MENU----------*/
         // Calls main menu
-        input = main_menu(input);
+        input = mainMenu(input);
         
         // Quit/info conditionals.
         if (input == "-quit") {
@@ -197,17 +203,17 @@ int main() {
         /*----------FILE READ----------*/
         // The file pathname is read, and the file info is committed to memory as a data stream, with 'wav_file' pointing to the first byte of data in this stream.
         //This means that the position of every value in the data stream is known, and committed to memory sequentially.
-        file_path = input.c_str();
-        FILE* wav_file;
-        wav_file = fopen(file_path, "rb+"); // 'rb+' is a binary read/update parameter. This allows the file to be read and separated into bytes easier, as well as updated if need be.
+        filePath = input.c_str();
+        FILE* wavFile;
+        wavFile = fopen(filePath, "rb+"); // 'rb+' is a binary read/update parameter. This allows the file to be read and separated into bytes easier, as well as updated if need be.
         
         // Parity checks and file read.
-        if (wav_file == nullptr) {
+        if (wavFile == nullptr) {
             std::cout << "\nERROR: File can't be read/input is invalid." << std::endl; // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful).
         } else {
             
-            fread(&wav_hdr, 1, hdr_size, wav_file); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
-            if (wav_hdr.no_channels != 1) {
+            fread(&wavHdr, 1, hdrSize, wavFile); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
+            if (wavHdr.noChannels != 1) {
                 std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
                 continue;
             } else {
@@ -219,22 +225,26 @@ int main() {
             input = options(input);
             
             if (input == "1") {
-                print_header(hdr_size, wav_file); // File information is printed.
+                print_header(hdrSize, wavFile); // File information is printed.
             } else if (input == "2") {
                 //sample recalc
-                input_filename(input, file_path);
+                filename(input, filePath);
             } else if (input == "3") {
                 
+                filename(input, filePath);
             } else if (input == "4") {
                 
+                filename(input, filePath);
             } else if (input == "5") {
                 
+                filename(input, filePath);
             } else {
                 std::cout << "\nERROR: Invalid option selection. Returning to the main menu." << std::endl;
             }
         }
         
-        fclose(wav_file);
+        fclose(wavFile);
         std::cout << std::endl;
     }
 }
+
