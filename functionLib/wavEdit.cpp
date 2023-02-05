@@ -40,7 +40,7 @@ void wavEdit::printHdr(int hdrSize, FILE* wavFile) {
 
 /*----------(2) CHANGE SAMPLE RATE----------*/
 // Changes sample rate of the WAV file according to user input.
-uint32_t wavEdit::change_sample(std::string input, uint32_t sampleRate) {
+uint32_t wavEdit::changeSampleRate(std::string input, uint32_t sampleRate) {
     std::cout << "---OPTION 2: CHANGE SAMPLE RATE---" << std::endl;
     std::cout << "Please choose a new sample rate between 24000-192000Hz." << std::endl;
     /*input = " ";

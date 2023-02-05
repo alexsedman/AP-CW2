@@ -31,7 +31,7 @@ int main() {
     wavEdit edit;
     
     // Variables declared: pointer to the filepath name and an input string.
-    int hdrSize = sizeof(cmd.wavHdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
+    int hdrSize = sizeof(wavHdr); // A variable to measure the size of the WAV header (this should be equivalent to 44 bytes).
     const char* filePath;
     std::string input;
     
@@ -45,7 +45,7 @@ int main() {
             std::cout << "\nBye!\n" << std::endl;
             return 0;
         } else if (input == "-info") {
-            cmd.info();
+            cmd.infoMenu();
             continue;
         }
         
@@ -61,8 +61,8 @@ int main() {
             std::cout << "\nERROR: File can't be read/input is invalid." << std::endl; // Throw an error if the file pointer returns a null value (i.e. the file read is unsuccessful).
         } else {
             
-            fread(&cmd.wavHdr, 1, hdrSize, wavFile); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
-            if (cmd.wavHdr.noChannels != 1) {
+            fread(&wavHdr, 1, hdrSize, wavFile); // An unsigned integer 'bytes_read' is assigned the value using the 'fread' function.
+            if (wavHdr.noChannels != 1) {
                 std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
                 continue;
             } else {
@@ -71,22 +71,22 @@ int main() {
             
             /*----------OPTION SECTION----------*/
             // Calls the options menu.
-            input = cmd.options(input);
+            input = cmd.optionsMenu(input);
             
             if (input == "1") {
                 edit.printHdr(hdrSize, wavFile); // File information is printed.
             } else if (input == "2") {
                 //sample recalc
-                cmd.filename(input, filePath);
+                cmd.filenameMenu(input, filePath);
             } else if (input == "3") {
                 
-                cmd.filename(input, filePath);
+                cmd.filenameMenu(input, filePath);
             } else if (input == "4") {
                 
-                cmd.filename(input, filePath);
+                cmd.filenameMenu(input, filePath);
             } else if (input == "5") {
                 
-                cmd.filename(input, filePath);
+                cmd.filenameMenu(input, filePath);
             } else {
                 std::cout << "\nERROR: Invalid option selection. Returning to the main menu." << std::endl;
             }

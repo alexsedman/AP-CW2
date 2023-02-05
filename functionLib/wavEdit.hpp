@@ -12,7 +12,7 @@ class wavEdit {
 public:
     // WAV file edit functions (options).
     void printHdr(int hdrSize, FILE* wavFile);
-    uint32_t change_sample(std::string input, uint32_t sampleRate);
+    uint32_t changeSampleRate(std::string input, uint32_t sampleRate);
 };
 
 #endif /* wavEdit_hpp */

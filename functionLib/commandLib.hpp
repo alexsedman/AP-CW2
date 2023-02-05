@@ -11,7 +11,7 @@
 
 /*----------WAV HEADER STRUCT----------*/
 // A data structure is defined for the WAV header.
-struct WAV_HEADER {
+inline struct WAV_HEADER {
     // RIFF Chunk Descriptor
     uint8_t RIFF[4];
     uint32_t fileSize;
@@ -35,13 +35,14 @@ struct WAV_HEADER {
 class commandLib {
     
 public:
+    struct WAV_HEADER wavHdr;
+    
     // General functions
-    WAV_HEADER wavHdr;
     std::string mainMenu(std::string input);
-    void info();
-    std::string options(std::string input);
-    std::string filename(std::string input, const char* filePath);
-    void write_file(int hdrSize, std::string newFilePath);
+    void infoMenu();
+    std::string optionsMenu(std::string input);
+    std::string filenameMenu(std::string input, const char* filePath);
+    void writeFile(int hdrSize, std::string newFilePath);
 };
 
 #endif /* commandLib_hpp */
