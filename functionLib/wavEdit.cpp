@@ -1,15 +1,15 @@
 //
-//  wavEdit.cpp
-//  CPP-CW2
+// wavEdit.cpp
+// CPP-CW2
 //
-//  Created by Alex Sedman on 03/02/2023.
+// Created by Alex Sedman on 03/02/2023.
+// A class containing the various wav edit functions that the program can perform, depending on what the user desires.
 //
 
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cstdint>
-
 #include "commandLib.hpp"
 #include "wavEdit.hpp"
 
@@ -30,12 +30,13 @@ void wavEdit::printHdr(int hdrSize, FILE* wavFile) {
     cout << "Audio Format: " << wavHdr.fmtType << endl;
     cout << "Number of Channels: " << wavHdr.numOfChannels << endl;
     cout << "Sample Rate: " << wavHdr.sampleRate << endl;
-    cout << "Data Rate (Bps): " << wavHdr.byteRate << endl;
+    cout << "Data Rate (Bps): " << wavHdr.dataRate << endl;
     cout << "Block Align: " << wavHdr.blockAlign << endl;
-    cout << "Bits Per Sample: " << wavHdr.sampleLen << endl;
+    cout << "Bits Per Sample: " << wavHdr.bitDepth << endl;
     
     cout << "Subchunk 2 ID (Data): " << wavHdr.DATA[0] << wavHdr.DATA[1] << wavHdr.DATA[2] << wavHdr.DATA[3] << endl;
     cout << "Subchunk 2 Size: " << wavHdr.dataSize << endl;
+    fclose(wavFile);
 }
 
 /*----------(2) CHANGE SAMPLE RATE----------*/
