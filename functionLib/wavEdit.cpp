@@ -28,7 +28,7 @@ void wavEdit::printHdr(int hdrSize, FILE* wavFile) {
     cout << "Subchunk 1 ID (Format): " << wavHdr.fmt[0] << wavHdr.fmt[1] << wavHdr.fmt[2] << wavHdr.fmt[3] << endl;
     cout << "Subchunk Size: " << wavHdr.fmtLen << endl;
     cout << "Audio Format: " << wavHdr.fmtType << endl;
-    cout << "Number of Channels: " << wavHdr.noChannels << endl;
+    cout << "Number of Channels: " << wavHdr.numOfChannels << endl;
     cout << "Sample Rate: " << wavHdr.sampleRate << endl;
     cout << "Data Rate (Bps): " << wavHdr.byteRate << endl;
     cout << "Block Align: " << wavHdr.blockAlign << endl;
@@ -51,9 +51,6 @@ uint32_t wavEdit::changeSampleRate(std::string input, uint32_t sampleRate) {
         }
     }
     std::cout << "New sample rate: ";*/
-    
-    
-    
     
     return sampleRate;
 }

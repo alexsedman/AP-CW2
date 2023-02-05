@@ -5,9 +5,13 @@
 //  Created by Alex Sedman on 03/02/2023.
 //
 
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstdint>
+
 #ifndef commandLib_hpp
 #define commandLib_hpp
-#include <cstdint>
 
 /*----------WAV HEADER STRUCT----------*/
 // A data structure is defined for the WAV header.
@@ -21,7 +25,7 @@ inline struct WAV_HEADER {
     uint8_t fmt[4];
     uint32_t fmtLen;
     uint16_t fmtType;
-    uint16_t noChannels;
+    uint16_t numOfChannels;
     uint32_t sampleRate;
     uint32_t byteRate;
     uint16_t blockAlign;
@@ -41,8 +45,9 @@ public:
     std::string mainMenu(std::string input);
     void infoMenu();
     std::string optionsMenu(std::string input);
-    std::string filenameMenu(std::string input, const char* filePath);
-    void writeFile(int hdrSize, std::string newFilePath);
+    std::string filenameMenu(std::string input, std::string filePathString, std::string newFilepath);
+    int16_t* readFile(int hdrSize, FILE* wavFile);
+    void writeFile(int hdrSize, int numOfSamples, std::string newFilePath, int16_t* audioStream);
 };
 
 #endif /* commandLib_hpp */

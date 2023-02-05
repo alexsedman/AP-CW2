@@ -5,6 +5,11 @@
 //  Created by Alex Sedman on 03/02/2023.
 //
 
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstdint>
+
 #ifndef wavEdit_hpp
 #define wavEdit_hpp
 
