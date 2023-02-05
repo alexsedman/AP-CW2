@@ -1,6 +1,6 @@
 //
 // wavEdit.cpp
-// CPP-CW2
+// C++ CW2
 //
 // Created by Alex Sedman on 03/02/2023.
 // A class containing the various wav edit functions that the program can perform, depending on what the user desires.

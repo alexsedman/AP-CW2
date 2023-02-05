@@ -4,13 +4,13 @@
 //
 // Created by Alex Sedman.
 //
-// GitHub branch update - I'm avoiding a heavy object-based approach for this code as the scope of the project is more manageable in a few CPP files.
+// TASK: Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
 // NOTE: Due to the file naming system in this program, it will only work robustly on Mac OS.
 //
-// TASK: Create a program without using any Audio Libraries to read a .wav file, perform some basic processed to the audio data and write the resulting audio data to a new .wav file.
-//
 
-// /Users/alexsedman/Downloads/test.wav
+/*
+/Users/alexsedman/Downloads/test.wav
+ */
 
 #include <iostream>
 #include <string>
@@ -26,11 +26,13 @@ int main() {
     
     // Variables declared.
     int hdrSize = sizeof(wavHdr), numOfSamples, bytesPerSample;
-    std::string filePath, newFilePath, input;
+    std::string input;
+    const char* filePath;
     int16_t* audioStream;
     FILE* wavFile;
     
     while (true) {
+        std::cin.clear();
         input = cmd.mainMenu(input); // Calls main menu.
         
         if (input == "-quit") {
@@ -42,15 +44,25 @@ int main() {
             continue;
         }
     
-        filePath = input; // Sets the file path to the user input.
-        wavFile = fopen(input.c_str(), "rb+"); // Attempts to open the inputted file.
+        filePath = input.c_str(); // Sets the file path to the user input.
+        wavFile = fopen(filePath, "rb+"); // Attempts to open the inputted file.
         
         if (wavFile == nullptr) {
             std::cout << "\nERROR: File can't be read/input is invalid.\n" << std::endl;
             continue; // If the input is invalid (i.e. 'fopen' returns a null pointer), then this error is thrown and the loop is skipped.
         } else {
             
-            audioStream = cmd.readFile(hdrSize, wavFile, bytesPerSample, numOfSamples); // Reads inputted file
+            //audioData = cmd.readFile(hdrSize, wavFile, bytesPerSample, numOfSamples); // Reads inputted file
+            fread(&wavHdr, 1, hdrSize, wavFile); // Header information is read from 'wavFile'.
+            fseek(wavFile, hdrSize, SEEK_SET); // File pointer is set to the start of the audio stream.
+            bytesPerSample = wavHdr.bitDepth / 8;
+            numOfSamples = wavHdr.dataSize / bytesPerSample; // Number of samples is calculated (bit depth/2).
+            int16_t* audioData = new int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
+            fread(audioData, bytesPerSample, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
+            
+            for (int i = 0; i < 1000; i++) {
+                printf("Sample %d: %d\n", i, audioStream[i]);
+            }
             
             if (wavHdr.numOfChannels != 1) {
                 std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
@@ -63,6 +75,7 @@ int main() {
             
             if (input == "1") {
                 edit.printHdr(hdrSize, wavFile); // File information is printed.
+                fclose(wavFile);
                 continue; // Skips the write phase of the program, as it is not needed for this option.
             } else if (input == "2") {
                 
@@ -76,8 +89,10 @@ int main() {
                 std::cout << "\nERROR: Invalid option selection. Returning to the main menu.\n" << std::endl;
                 continue;
             }
-            newFilePath = cmd.filenameMenu(input, filePath, newFilePath); // Asks user for new filename.
+            
+            std::string newFilePath = cmd.filenameMenu(input, filePath); // Asks user for new filename.
             cmd.writeFile(hdrSize, numOfSamples, newFilePath, audioStream); // Writes new file.
+            fclose(wavFile);
         }
         std::cout << std::endl; // Console new line.
     }

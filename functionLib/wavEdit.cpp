@@ -1,6 +1,6 @@
 //
 // wavEdit.cpp
-// CPP-CW2
+// C++ CW2
 //
 // Created by Alex Sedman on 03/02/2023.
 // A class containing the various wav edit functions that the program can perform, depending on what the user desires.
@@ -35,7 +35,7 @@ void wavEdit::printHdr(int hdrSize, FILE* wavFile) {
     cout << "Bits Per Sample: " << wavHdr.bitDepth << endl;
     
     cout << "Subchunk 2 ID (Data): " << wavHdr.DATA[0] << wavHdr.DATA[1] << wavHdr.DATA[2] << wavHdr.DATA[3] << endl;
-    cout << "Subchunk 2 Size: " << wavHdr.dataSize << endl;
+    cout << "Subchunk 2 Size: " << wavHdr.dataSize << endl << endl;
     fclose(wavFile);
 }
 

@@ -1,6 +1,6 @@
 //
 // commandLib.hpp
-// CPP-CW2
+// C++ CW2
 //
 // Created by Alex Sedman on 03/02/2023.
 // A general command library for the program.
@@ -64,12 +64,12 @@ std::string commandLib::optionsMenu(std::string input) {
 
 /*----------NEW FILENAME----------*/
 // Gets a file name from user for the new WAV and converts this input to a new file path.
-std::string commandLib::filenameMenu(std::string input, std::string filePath, std::string newFilepath) {
+std::string commandLib::filenameMenu(std::string input, const char* filePath) {
     // The new path variable is defined, and instructions are outputted.
-    std::string newFilePath = filePath; // New file path is declared as same as old file path, so that it can be edited later.
-    std::ifstream fileTest;
+    std::string newFilePath = std::string(filePath); // New file path is declared as same as old file path, so that it can be edited later.
     
-    std::cout << "\nPlease select a new filename." << std::endl;
+    std::cout << "\n---OPTIONS---" << std::endl;
+    std::cout << "Please select a new filename." << std::endl;
     std::cout << "NOTE: Files can not: \n- Contain a colon (':') \n- Contain a forward slash ('/') \n- Start with a period ('.') \n- Be more than 32 characters long \n- Be an empty input\nThe extension '.wav' will be automatically appended." << std::endl;
     std::cout << "The new WAV will be created in the same directory as the old WAV." << std::endl;
    
@@ -89,22 +89,22 @@ std::string commandLib::filenameMenu(std::string input, std::string filePath, st
         newFilePath.std::string::resize(newFilePath.std::string::find_last_of("/")+1); // Derives parent folder of old WAV.
         newFilePath.std::string::append(input); // Appends the user file name to the file path.
         
-        
         // The following checks whether the inputted filepath already exists, and throws an error if it does.
         FILE* testFile;
         testFile = fopen(newFilePath.c_str(), "r");
         if (testFile) {
             std::cout << "ERROR: File already exists!" << std::endl;
+            fclose(testFile);
             continue;
         }
-        fclose(testFile);
-        
         break;
     }
+    
     return newFilePath;
+    
 }
 
-/*----------READ FILE----------*/
+/*----------READ FILE----------
 // Function to write the data stream to a new file.
 int16_t* commandLib::readFile(int hdrSize, FILE* wavFile, int bytesPerSample, int numOfSamples) {
     
@@ -116,7 +116,7 @@ int16_t* commandLib::readFile(int hdrSize, FILE* wavFile, int bytesPerSample, in
     fread(&audioData, (wavHdr.bitDepth / 8), numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
     
     return audioData;
-}
+}*/
 
 /*----------WRITE NEW FILE----------*/
 // Function to write the data stream to a new file.
@@ -126,7 +126,7 @@ void commandLib::writeFile(int hdrSize, int numOfSamples, std::string newFilePat
     newFile = fopen(newFilePath.c_str(), "wb+"); // Open the new file in write binary mode.
     fwrite(&wavHdr, 1, hdrSize, newFile); // Write header.
     fseek(newFile, hdrSize, SEEK_SET); // Set file pointer to the start of the audio stream.
-    fwrite(&audioStream, 2, numOfSamples, newFile); // Write audio data.
+    //fwrite(audioStream, 2, numOfSamples, newFile); // Write audio data.
     fclose(newFile); // Close file.
     
     std::cout << "\nFile write success!" << std::endl;

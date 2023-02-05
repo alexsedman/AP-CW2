@@ -1,6 +1,6 @@
 //
 // commandLib.hpp
-// CPP-CW2
+// C++ CW2
 //
 // Created by Alex Sedman on 03/02/2023.
 // A general command library for the program.
@@ -44,7 +44,7 @@ public:
     std::string mainMenu(std::string input); // Main Menu.
     void infoMenu(); // Info menu.
     std::string optionsMenu(std::string input); // Options menu.
-    std::string filenameMenu(std::string input, std::string filePathString, std::string newFilepath); // New file name menu.
+    std::string filenameMenu(std::string input, const char* filePath); // New file name menu.
     int16_t* readFile(int hdrSize, FILE* wavFile, int bytesPerSample, int numOfSamples); // Read file.
     void writeFile(int hdrSize, int numOfSamples, std::string newFilePath, int16_t* audioStream); // Write file.
 };
