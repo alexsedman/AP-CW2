@@ -10,14 +10,18 @@
 #include <string>
 #include <fstream>
 #include <cstdint>
+#include <algorithm>
 #ifndef wavEdit_hpp
 #define wavEdit_hpp
 
 class wavEdit {
 public:
     // WAV file edit functions (options).
-    void printHdr(int hdrSize, FILE* wavFile);
-    uint32_t changeSampleRate(std::string input, uint32_t sampleRate);
+    void printHdr(int headerSize, FILE* wavFile);
+    void changeSampleRate(std::string input);
+    void addPause(int16_t* audioData, int numOfSamples);
+    void normalise(int16_t* audioData, int numOfSamples);
+    void reverse(int16_t* audioDaa, int numOfSamples);
 };
 
 #endif /* wavEdit_hpp */

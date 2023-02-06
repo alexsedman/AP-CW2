@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <cstdint>
+#include <algorithm>
 #include "commandLib.hpp"
 #include "wavEdit.hpp"
 
@@ -105,25 +106,25 @@ std::string commandLib::filenameMenu(std::string input, const char* filePath) {
 
 /*----------READ FILE----------*/
 // Function to write the data stream to a new file.
-int16_t* commandLib::readFile(int hdrSize, FILE* wavFile, int numOfSamples) {
+int16_t* commandLib::readFile(int headerSize, FILE* wavFile, int numOfSamples) {
     
-    fread(&wavHdr, 1, hdrSize, wavFile); // Header information is read from 'wavFile'.
-    fseek(wavFile, hdrSize, SEEK_SET); // File pointer is set to the start of the audio stream.
-    int16_t* audioStream = new(std::nothrow) int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
-    fread(audioStream, 2, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
+    fread(&wavHdr, 1, headerSize, wavFile); // Header information is read from 'wavFile'.
+    fseek(wavFile, headerSize, SEEK_SET); // File pointer is set to the start of the audio stream.
+    int16_t* audioData = new(std::nothrow) int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
+    fread(audioData, 2, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
 
-    return audioStream;
+    return audioData;
 }
 
 /*----------WRITE NEW FILE----------*/
 // Function to write the data stream to a new file.
-void commandLib::writeFile(int hdrSize, int numOfSamples, std::string newFilePath, int16_t* audioStream) {
+void commandLib::writeFile(int headerSize, int numOfSamples, std::string newFilePath, int16_t* audioData) {
     FILE* newFile;
     
     newFile = fopen(newFilePath.c_str(), "wb+"); // Open the new file in write binary mode.
-    fwrite(&wavHdr, 1, hdrSize, newFile); // Write header.
-    fseek(newFile, hdrSize, SEEK_SET); // Set file pointer to the start of the audio stream.
-    fwrite(audioStream, 2, numOfSamples, newFile); // Write audio data.
+    fwrite(&wavHdr, 1, headerSize, newFile); // Write header.
+    fseek(newFile, headerSize, SEEK_SET); // Set file pointer to the start of the audio stream.
+    fwrite(audioData, 2, numOfSamples, newFile); // Write audio data.
     fclose(newFile); // Close file.
     
     std::cout << "\nFile write success!" << std::endl;
