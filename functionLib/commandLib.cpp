@@ -66,8 +66,8 @@ std::string commandLib::optionsMenu(std::string input) {
 // Gets a file name from user for the new WAV and converts this input to a new file path.
 std::string commandLib::filenameMenu(std::string input, const char* filePath) {
     // The new path variable is defined, and instructions are outputted.
-    std::string newFilePath = std::string(filePath); // New file path is declared as same as old file path, so that it can be edited later.
-    
+    std::string newFilePath = filePath; // New file path is declared as same as old file path, so that it can be edited later.
+    std::cout << newFilePath;
     std::cout << "\n---OPTIONS---" << std::endl;
     std::cout << "Please select a new filename." << std::endl;
     std::cout << "NOTE: Files can not: \n- Contain a colon (':') \n- Contain a forward slash ('/') \n- Start with a period ('.') \n- Be more than 32 characters long \n- Be an empty input\nThe extension '.wav' will be automatically appended." << std::endl;
@@ -91,7 +91,7 @@ std::string commandLib::filenameMenu(std::string input, const char* filePath) {
         
         // The following checks whether the inputted filepath already exists, and throws an error if it does.
         FILE* testFile;
-        testFile = fopen(newFilePath.c_str(), "r");
+        testFile = fopen(newFilePath.c_str(), "rb+");
         if (testFile) {
             std::cout << "ERROR: File already exists!" << std::endl;
             fclose(testFile);
@@ -99,24 +99,21 @@ std::string commandLib::filenameMenu(std::string input, const char* filePath) {
         }
         break;
     }
-    
     return newFilePath;
     
 }
 
-/*----------READ FILE----------
+/*----------READ FILE----------*/
 // Function to write the data stream to a new file.
-int16_t* commandLib::readFile(int hdrSize, FILE* wavFile, int bytesPerSample, int numOfSamples) {
+int16_t* commandLib::readFile(int hdrSize, FILE* wavFile, int numOfSamples) {
     
     fread(&wavHdr, 1, hdrSize, wavFile); // Header information is read from 'wavFile'.
     fseek(wavFile, hdrSize, SEEK_SET); // File pointer is set to the start of the audio stream.
-    bytesPerSample = wavHdr.bitDepth / 8;
-    numOfSamples = wavHdr.dataSize / bytesPerSample; // Number of samples is calculated (bit depth/2).
-    int16_t* audioData = new(std::nothrow) int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
-    fread(&audioData, (wavHdr.bitDepth / 8), numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
-    
-    return audioData;
-}*/
+    int16_t* audioStream = new(std::nothrow) int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
+    fread(audioStream, 2, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
+
+    return audioStream;
+}
 
 /*----------WRITE NEW FILE----------*/
 // Function to write the data stream to a new file.
@@ -126,7 +123,7 @@ void commandLib::writeFile(int hdrSize, int numOfSamples, std::string newFilePat
     newFile = fopen(newFilePath.c_str(), "wb+"); // Open the new file in write binary mode.
     fwrite(&wavHdr, 1, hdrSize, newFile); // Write header.
     fseek(newFile, hdrSize, SEEK_SET); // Set file pointer to the start of the audio stream.
-    //fwrite(audioStream, 2, numOfSamples, newFile); // Write audio data.
+    fwrite(audioStream, 2, numOfSamples, newFile); // Write audio data.
     fclose(newFile); // Close file.
     
     std::cout << "\nFile write success!" << std::endl;

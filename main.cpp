@@ -25,7 +25,7 @@ int main() {
     wavEdit edit;
     
     // Variables declared.
-    int hdrSize = sizeof(wavHdr), numOfSamples, bytesPerSample;
+    int hdrSize = sizeof(wavHdr), numOfSamples;
     std::string input;
     const char* filePath;
     int16_t* audioStream;
@@ -52,19 +52,17 @@ int main() {
             continue; // If the input is invalid (i.e. 'fopen' returns a null pointer), then this error is thrown and the loop is skipped.
         } else {
             
-            //audioData = cmd.readFile(hdrSize, wavFile, bytesPerSample, numOfSamples); // Reads inputted file
             fread(&wavHdr, 1, hdrSize, wavFile); // Header information is read from 'wavFile'.
             fseek(wavFile, hdrSize, SEEK_SET); // File pointer is set to the start of the audio stream.
-            bytesPerSample = wavHdr.bitDepth / 8;
-            numOfSamples = wavHdr.dataSize / bytesPerSample; // Number of samples is calculated (bit depth/2).
-            int16_t* audioData = new int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
-            fread(audioData, bytesPerSample, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
+            int16_t* audioStream = new(std::nothrow) int16_t[numOfSamples]; // A pointer to a dynamic array is created; the audio stream will be stored here.
+            fread(audioStream, 2, numOfSamples, wavFile); // Audio stream is read from 'wavFile'.
             
+            //test
             for (int i = 0; i < 1000; i++) {
                 printf("Sample %d: %d\n", i, audioStream[i]);
             }
             
-            if (wavHdr.numOfChannels != 1) {
+            if (wavHdr.numChannels != 1) {
                 std::cout << "\nERROR: The inputted file is not mono! Please only supply a mono file.\n" << std::endl;
                 continue; // If the file is stereo, throw an error:
             } else {

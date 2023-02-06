@@ -23,13 +23,13 @@ inline struct WAV_HEADER {
 
     // fmt subchunk
     uint8_t fmt[4];
-    uint32_t fmtLen;
+    uint32_t fmtSize;
     uint16_t fmtType;
-    uint16_t numOfChannels;
+    uint16_t numChannels;
     uint32_t sampleRate;
-    uint32_t dataRate;
+    uint32_t byteRate;
     uint16_t blockAlign;
-    uint16_t bitDepth;
+    uint16_t bitsPerSample;
     
     // Data subchunk
     uint8_t DATA[4];
@@ -45,7 +45,7 @@ public:
     void infoMenu(); // Info menu.
     std::string optionsMenu(std::string input); // Options menu.
     std::string filenameMenu(std::string input, const char* filePath); // New file name menu.
-    int16_t* readFile(int hdrSize, FILE* wavFile, int bytesPerSample, int numOfSamples); // Read file.
+    int16_t* readFile(int hdrSize, FILE* wavFile, int numOfSamples); // Read file.
     void writeFile(int hdrSize, int numOfSamples, std::string newFilePath, int16_t* audioStream); // Write file.
 };
 
