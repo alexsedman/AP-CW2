@@ -14,8 +14,6 @@
 #include "commandLib.hpp"
 #include "wavEdit.hpp"
 
-commandLib cmd;
-
 /*----------(1) PRINT WAV HEADER----------*/
 // Function to print WAV header.
 void wavEdit::printHdr(int headerSize, FILE* wavFile) {
@@ -45,62 +43,64 @@ void wavEdit::printHdr(int headerSize, FILE* wavFile) {
 // Changes sample rate of the WAV file according to user input.
 void wavEdit::changeSampleRate(std::string input) {
     std::cout << "\n---OPTION 2: CHANGE SAMPLE RATE---" << std::endl;
-    std::cout << "Please choose a new sample rate between 11025-192000Hz." << std::endl;
+    std::cout << "Please choose a new sample rate between 1-192000Hz." << std::endl;
     
     while (true) {
         std::cout << "New sample rate: ";
         getline(std::cin, input);
         try {
-            uint32_t sampleRange = std::stoul(input);
-            if (sampleRange < 11025 || sampleRange > 192000) {
-                throw std::out_of_range("Value is outside of allowed range (11025-192000Hz)"); // The range 11025-192000Hz is representative of (44.1k/4) to (48k*4).
+            uint32_t sampleRange = std::stoul(input); // Tries to convert the input to an unsigned 32-bit integer.
+            if (sampleRange < 1 || sampleRange > 192000) {
+                throw std::out_of_range("Value is outside of allowed range (1-192000Hz)"); // Throws an error if the input is out of range.
             }
-            std::cout << sampleRange << std::endl;  // Output: 42
-        } catch (const std::invalid_argument&) {
-            std::cerr << "ERROR: Invalid input." << std::endl;
+        } catch (const std::invalid_argument) {
+            std::cout << "ERROR: Invalid input." << std::endl; // This error is thrown if the input is not valid (i.e. not assignable as an integer).
             continue;
-        } catch (const std::out_of_range&) {
-            std::cerr << "ERROR: Value out of range! (11025-192000Hz)" << std::endl;
+        } catch (const std::out_of_range) {
+            std::cout << "ERROR: Value out of range! (1-192000Hz)" << std::endl; // Range error message.
             continue;
         }
         break;
     }
-    
-    wavHdr.sampleRate = std::stoul(input);
+    std::cout << "\nSample rate changed!" << std::endl;
+    wavHdr.sampleRate = std::stoul(input); // Sample rate changed.
 }
 
 /*----------(3) ADD PAUSE----------*/
 void wavEdit::addPause(int16_t* audioData, int numOfSamples) {
     int pauseStart = ((numOfSamples/2) + (numOfSamples/100)), pauseEnd = ((numOfSamples/2) + (numOfSamples/30)); // Start and end samples of pause are defined.
     for (int i = pauseStart; i <= pauseEnd; i++) {
-        audioData[i] = 0;
+        audioData[i] = 0; // Pause created. Values between the start and end point are converted to 0, creating a gap.
     }
+    std::cout << "\nPause added!" << std::endl;
 }
 
 /*----------(4) NORMALISE----------*/
 void wavEdit::normalise(int16_t* audioData, int numOfSamples) {
-    int16_t maxValue = audioData[0];
+    int16_t maxValue = audioData[0]; // Max value set.
       for (int i = 1; i < numOfSamples; i++) {
-        if (audioData[i] > maxValue) {
-          maxValue = audioData[i];
+        if (abs(audioData[i]) > abs(maxValue)) {
+          maxValue = audioData[i]; // For each value in the data loop, check whether it is larger than max value, and if so, reassign it as the max value.
         }
       }
     
     // Normalize the data using a for loop.
     for (int i = 0; i < numOfSamples; i++) {
-        audioData[i] = (audioData[i] * 32767) / maxValue;
+        audioData[i] = (audioData[i] * -32767) / maxValue; // This maths calculation sets the max value sample to the max 16-bit value.
       }
+    std::cout << "\nAudio normalised!" << std::endl;
 }
+
 /*----------(5) FILTER----------*/
 // Reverses the data stream.
 void wavEdit::reverse(int16_t* audioData, int numOfSamples) {
     int start = 0, end = numOfSamples - 1;
-    while (start < end)
-        {
-            int temp = audioData[start];
-            audioData[start] = audioData[end];
-            audioData[end] = temp;
-            start++;
-            end--;
-        }
+    while (start < end) {
+        int temp = audioData[start];
+        audioData[start] = audioData[end];
+        audioData[end] = temp;
+        start++;
+        end--;
+    }
+    std::cout << "\nAudio Reversed!" << std::endl;
 }
