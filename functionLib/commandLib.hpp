@@ -46,8 +46,6 @@ public:
     void infoMenu(); // Info menu.
     std::string optionsMenu(std::string input); // Options menu.
     std::string filenameMenu(std::string input, std::string filePath); // New file name menu.
-    int16_t* readFile(int headerSize, FILE* wavFile, int numOfSamples); // Read file.
-    void writeFile(int headerSize, int numOfSamples, const char* newFilePath, int16_t* audioData); // Write file.
 };
 
 #endif /* commandLib_hpp */
