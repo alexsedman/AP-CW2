@@ -17,11 +17,11 @@
 class wavEdit {
 public:
     // WAV file edit functions (options).
-    void printHdr(int headerSize, FILE* wavFile);
-    void changeSampleRate(std::string input);
-    void addPause(int16_t* audioData, int numOfSamples);
-    void normalise(int16_t* audioData, int numOfSamples);
-    void reverse(int16_t* audioDaa, int numOfSamples);
+    void printHdr(int headerSize, FILE* wavFile); // Prints header.
+    void changeSampleRate(std::string input); // Changes sample rate.
+    void addPause(int16_t* audioData, int numOfSamples); // Adds a pause.
+    void normalise(int16_t* audioData, int numOfSamples); // Normalises audio.
+    void reverse(int16_t* audioDaa, int numOfSamples); // Reverses audio.
 };
 
 #endif /* wavEdit_hpp */

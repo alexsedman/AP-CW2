@@ -47,7 +47,7 @@ void wavEdit::changeSampleRate(std::string input) {
     
     while (true) {
         std::cout << "New sample rate: ";
-        getline(std::cin, input);
+        getline(std::cin, input); // Gets user input.
         try {
             uint32_t sampleRange = std::stoul(input); // Tries to convert the input to an unsigned 32-bit integer.
             if (sampleRange < 1 || sampleRange > 192000) {
@@ -95,12 +95,13 @@ void wavEdit::normalise(int16_t* audioData, int numOfSamples) {
 // Reverses the data stream.
 void wavEdit::reverse(int16_t* audioData, int numOfSamples) {
     int start = 0, end = numOfSamples - 1;
+    // The following while loop swaps the audio samples from back to front, by flipping them until the while loop meets in the middle.
     while (start < end) {
-        int temp = audioData[start];
-        audioData[start] = audioData[end];
-        audioData[end] = temp;
-        start++;
-        end--;
+        int temp = audioData[start]; // A temp placeholder variable is used to store samples starting from the beginning.
+        audioData[start] = audioData[end]; // The beginning audio samples are replaced with the ending audio samples.
+        audioData[end] = temp; // The end audio samples are replaced with the beginning audio samples (from the placeholder variable).
+        start++; // Next beginning sample, moving forwards.
+        end--; // Next ending sample, moving backwards.
     }
     std::cout << "\nAudio Reversed!" << std::endl;
 }

@@ -8,10 +8,6 @@
 // NOTE: Due to the file naming system in this program, it will only work robustly on Mac OS.
 //
 
-/*
-/Users/alexsedman/Downloads/test.wav
- */
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -95,9 +91,6 @@ int main() {
             fseek(newFile, headerSize, SEEK_SET); // Set file pointer to the start of the audio stream.
             fwrite(audioData, 2, numOfSamples, newFile); // Write audio data.
             fclose(newFile); // Close file.
-            
-            std::cout << "\nFile write success!" << std::endl;
-            
         }
         std::cout << std::endl; // Console new line.
     }

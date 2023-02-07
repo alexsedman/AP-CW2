@@ -27,7 +27,7 @@ std::string commandLib::mainMenu(std::string input) {
     cout << "- Enter '-quit' to quit." <<endl;
     cout << "Please input your choice: ";
     
-    getline(cin, input);
+    getline(cin, input); // Gets user input.
     return input;
 }
 
@@ -59,7 +59,7 @@ std::string commandLib::optionsMenu(std::string input) {
     cout << "- Enter anything else to return to the main menu." << endl;
     cout << "Please input your choice: ";
     
-    getline(cin, input);
+    getline(cin, input); // Gets user input.
     return input;
 }
 
@@ -70,20 +70,19 @@ std::string commandLib::filenameMenu(std::string input, std::string filePath) {
     std::cout << "\n---OPTIONS---" << std::endl;
     std::cout << "Please select a new filename." << std::endl;
     std::cout << "NOTE: Files can not: \n- Contain a colon (':') \n- Contain a forward slash ('/') \n- Start with a period ('.') \n- Be more than 32 characters long \n- Be an empty input\nThe extension '.wav' will be automatically appended." << std::endl;
-    std::cout << "The new WAV will be created in the same directory as the old WAV." << std::endl;
+    std::cout << "The new WAV will be created in the build folder." << std::endl;
    
     // This while loop demands a valid filename input from the user.
     while (true) {
         std::cout << "Filename: ";
-        std::getline(std::cin, input);
+        std::getline(std::cin, input); // Gets user input.
         
-        // Parity checks: Make sure the requirements for a legal filename are met, as outlines above by the console output.
+        // Parity checks: Make sure the requirements for a legal filename are met, as outlined above by the console output.
         if ((input.find(':') != std::string::npos) || (input.find('/') != std::string::npos) || (input.length() == 0) || (input.at(0) == '.') || (input.length() > 32)) {
             std::cout << "ERROR: Invalid filename." << std::endl;
             continue;
         }
         
-        // The following lines construct the new path name.
         newFilePath = input.std::string::append(".wav"); // Appends '.wav' to user input.
         
         // The following checks whether the inputted filepath already exists, and throws an error if it does.
@@ -97,5 +96,4 @@ std::string commandLib::filenameMenu(std::string input, std::string filePath) {
         break;
     }
     return newFilePath;
-    
 }
